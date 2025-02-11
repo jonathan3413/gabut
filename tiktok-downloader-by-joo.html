@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Video TikTok</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.2rem;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #ff0050;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #ff0050;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #e00045;
+}
+
+#result {
+  margin-top: 20px;
+}
+
+#result video {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+#result a {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #ff0050;
+  color: white;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+#result a:hover {
+  background-color: #e00045;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unduh Video TikTok</h1>
+        <input type="text" id="videoUrl" placeholder="Masukkan link video TikTok">
+        <button onclick="downloadVideo()">Unduh</button>
+        <div id="result"></div>
+    </div>
+    <script>
+      function downloadVideo() {
+    let videoUrl = document.getElementById("videoUrl").value;
+
+    if (!videoUrl) {
+        alert("Masukkan link video TikTok terlebih dahulu!");
+        return;
+    }
+
+    // Menggunakan API pihak ketiga (contoh: snaptik.app atau ttdownloader.com)
+    let apiURL = `https://www.tikwm.com/api/?url=${encodeURIComponent(videoUrl)}`;
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.data && data.data.play) {
+                let downloadLink = data.data.play;
+                document.getElementById("result").innerHTML = `
+                    <video src="${downloadLink}" controls width="100%"></video>
+                    <br>
+                    <a href="${downloadLink}" download class="btn">Download Video</a>
+                `;
+            } else {
+                alert("Gagal mengambil video! Pastikan link benar.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan dalam pengambilan data.");
+        });
+}
+    </script>
+</body>
+</html>
