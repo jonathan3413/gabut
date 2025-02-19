@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Barcode & Kirim ke WhatsApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        video {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #000;
+            border-radius: 10px;
+        }
+        p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #3887be;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Scan Barcode & Kirim ke WhatsApp</h2>
+    
+    <!-- Tampilan Video Kamera -->
+    <video id="preview" autoplay></video>
+
+    <!-- Hasil Scan -->
+    <p>Isi Barcode: <span id="hasil">Belum ada barcode yang dipindai</span></p>
+
+    <!-- Tombol Kirim ke WhatsApp -->
+    <button id="kirimWA" style="display: none;">Kirim ke WhatsApp</button>
+
+    <!-- Library ZXing untuk Barcode -->
+    <script src="https://unpkg.com/@zxing/library@latest"></script>
+
+    <script>
+        function startScanner() {
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: "environment" // Menggunakan kamera belakang
+                }
+            })
+            .then(function(stream) {
+                document.getElementById("preview").srcObject = stream;
+
+                const codeReader = new ZXing.BrowserMultiFormatReader();
+
+                codeReader.decodeFromVideoDevice(null, 'preview', (result, err) => {
+                    if (result) {
+                        console.log(result);
+                        const barcodeContent = result.getText();
+                        document.getElementById("hasil").textContent = barcodeContent;
+
+                        // Salin otomatis ke clipboard
+                        navigator.clipboard.writeText(barcodeContent)
+                            .then(() => alert("Hasil scan tersalin otomatis: " + barcodeContent))
+                            .catch(err => console.error("Gagal menyalin: ", err));
+
+                        // Menampilkan tombol Kirim ke WhatsApp
+                        document.getElementById("kirimWA").style.display = "block";
+
+                        // Mengatur tombol untuk membuka WhatsApp
+                        document.getElementById("kirimWA").onclick = function() {
+                            kirimKeWhatsApp();
+                        };
+                    }
+                    if (err) {
+                        console.error(err);
+                    }
+                });
+            })
+            .catch(function(err) {
+                console.error("Error akses kamera:", err);
+                alert("Gagal mengakses kamera.");
+            });
+        }
+
+        function kirimKeWhatsApp() {
+            const grupLink = "https://chat.whatsapp.com/KLokoG9ShhU1tDQq9m4BcJ"; // Link grup WhatsApp
+            window.open(grupLink, "_blank"); // Membuka grup WhatsApp
+        }
+
+        window.onload = function() {
+            startScanner();
+        };
+    </script>
+
+</body>
+</html>
