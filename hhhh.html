@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #ff4081;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #e91e63;
+        }
+        #content {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Masukkan Password</h2>
+        <input type="password" id="password" placeholder="Masukkan password">
+        <button onclick="checkPassword()">Submit</button>
+    </div><div id="content">
+    <h1>Selamat Datang di Website</h1>
+    <p>Anda telah berhasil masuk MISPAR! </p>
+    <p>Kalau emng udh bisa kasih tutor dong.</p>
+</div>
+
+<script>
+    function checkPassword() {
+        var pass = document.getElementById("password").value;
+        if (pass === "michiejkt48") {
+            document.querySelector(".login-container").style.display = "none";
+            document.getElementById("content").style.display = "block";
+        } else {
+            alert("Password salah MISPAR!");
+        }
+    }
+</script>
+
+</body>
+</html>
