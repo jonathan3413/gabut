@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.header {
+    background-color: crimson;
+    width: 100%;
+    color: white;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.judul {
+    display: flex;
+}
+
+a {
+    color: white;
+    text-transform: capitalize;
+    margin-left: 8px;
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 4px solid;
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        display: block;
+        text-align: center;
+    }
+
+    .judul {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.container {
+    max-width: 769px;
+    margin: 20px auto;
+    box-shadow: 3px 4px 10px;
+    padding: 20px 10px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+h1 {
+    border-left: 8px solid crimson;
+}
+
+img {
+    margin: 15px;
+    width: 65%;
+}
